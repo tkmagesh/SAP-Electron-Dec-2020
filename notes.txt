@@ -1,0 +1,57 @@
+JavaScript
+    Scripting language for the browser
+
+Data Types
+    intrinsic types
+        number
+        string
+        boolean
+    complex type
+        object
+        function
+    misc
+        undefined
+
+Programming Constructs
+    var, if else, switch case, for, for in, while, throw, try catch finally, function
+
+APIs
+    Array, Date, Math, Regex, typeof, timer (setTimeout, clearTimeout, setInterval, clearInterval)
+
+Unique Features
+    A method is an attribute whose value is a function
+
+Line Oriented
+Procedural
+Object Based
+Object Oriented
+Functional
+    Functions are first class citizens
+        (funtions can be treated like data/object)
+        - functions can be created using function expression
+        - functions can have attributes
+        - functions can have methods
+        - functions can be passed as arguments to other functions
+        - functions can be returned as return value from another function
+
+        - functions are objects (called 'callable objects' )
+
+    Support for higher order functions
+
+    Concept of 'Invocation Context'
+
+    In JavaScript, it DOES NOT matter where the function is OR who owns the function
+        what matters is HOW the function is invoked
+
+    Function Invocation Patterns
+        - As a method of an object (obj)
+            this -> obj
+        - As a function
+            this -> global (window)
+        - Using the 'call' method of the function
+
+        - Using the 'apply' method of the function
+
+        - Immediately Invoked Function Expression (IIFE)
+
+In NON FUnctional languages, functions are mere 'programming constructs'
