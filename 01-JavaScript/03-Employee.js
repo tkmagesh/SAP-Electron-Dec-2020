@@ -5,3 +5,4 @@ function Employee(id, name, salary){
     this.salary = salary;
     // this -> returned by default
 }
+

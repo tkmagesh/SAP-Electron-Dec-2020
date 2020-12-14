@@ -65,3 +65,17 @@ window.counter = 10000
 spinner.up() // should not return 10001 
 
 */
+
+//As a constructor function
+
+function Spinner(){
+    var counter = 0;
+
+    this.up = function(){
+        return ++counter;
+    };
+
+    this.down = function(){
+        return --counter;
+    };
+}

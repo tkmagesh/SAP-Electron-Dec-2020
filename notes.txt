@@ -26,6 +26,7 @@ Procedural
 Object Based
 Object Oriented
 Functional
+    In NON FUnctional languages, functions are mere 'programming constructs'
     Functions are first class citizens
         (funtions can be treated like data/object)
         - functions can be created using function expression
@@ -33,8 +34,15 @@ Functional
         - functions can have methods
         - functions can be passed as arguments to other functions
         - functions can be returned as return value from another function
-
+        - functions are variadic by default
         - functions are objects (called 'callable objects' )
+
+        - when invoked, the following implicit objects are available in a function
+            - this
+            - arguments
+                array like object containing all the argument values passed to the function
+                has a 'length' attribute (the # of arguments)
+                has support for indexer (arguments[0], arguments[1]....)
 
     Support for higher order functions
 
@@ -46,12 +54,35 @@ Functional
     Function Invocation Patterns
         - As a method of an object (obj)
             this -> obj
+
         - As a function
             this -> global (window)
+
         - Using the 'call' method of the function
 
         - Using the 'apply' method of the function
 
         - Immediately Invoked Function Expression (IIFE)
 
-In NON FUnctional languages, functions are mere 'programming constructs'
+        - Using the 'new' keyword (Constructor Function)
+
+Constructor Functions
+    Functions that behave like class 
+    NO syntax differences between a normal function and a constructor function
+    To differentiate, a convention is followed : The function name must start with uppercase 
+    Constructor Functions are invoked using the 'new' keyword
+        - this -> refers to a new object
+        - this -> returned by default
+
+dynamic
+    An object in javascript is just a dictionary / map / hash 
+        - collection of key/value pairs
+
+    Convention :
+        When 'write' operation to an attribute
+            use the dot notation for updating an existing attribute
+            use the [] notation when creating a new attribute
+
+loosely typed
+
+
