@@ -33,4 +33,26 @@
 
     window['addAsyncClient'] = addAsyncClient;
 
+    function addAsyncPromise(x,y){
+        console.log(`   [@Service] processing ${x} and ${y}`);
+        var p = new Promise(function(resolveFn, rejectFn){ 
+            setTimeout(function(){
+                var result = x + y;
+                console.log(`   [@Service] returning the result`);
+                resolveFn(result);
+            }, 5000);
+        });
+        return p;
+    }
+
+    function addAsyncPromiseClient(x,y){
+        console.log(`[@Client] invoking the service`);
+        var p = addAsyncPromise(x,y)
+        p.then(function(result){
+            console.log(`[@Client] result = ${result}`);
+        });
+    }
+
+    window['addAsyncPromiseClient'] = addAsyncPromiseClient;
+
 })()
