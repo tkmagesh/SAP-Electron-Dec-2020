@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click Counter</title>
     <script>
-        var counter = 0;
-        function onBtnTrackClick() {
-            ++counter;
-            document.getElementById('divResult').innerText = '[' + counter + ']';
-        }
-        function onDocumentLoad(){
-            var btnTrack = document.getElementById('btnTrack');
-            btnTrack.addEventListener('click', onBtnTrackClick);
-        }
-        window.addEventListener('load', onDocumentLoad);
+        (function myApp(){
+            var counter = 0;
+            function onBtnTrackClick() {
+                ++counter;
+                document.getElementById('divResult').innerText = '[' + counter + ']';
+            }
+            function onDocumentLoad(){
+                var btnTrack = document.getElementById('btnTrack');
+                btnTrack.addEventListener('click', onBtnTrackClick);
+            }
+            window.addEventListener('load', onDocumentLoad);
+        })()
+        //myApp();
     </script>
 </head>
 <body>
