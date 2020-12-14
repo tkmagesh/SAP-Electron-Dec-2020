@@ -108,3 +108,58 @@ http://es6-features.org
 
 Async Operations
     Operation that is initiated but not waited for its completion
+
+    Promise - an object designed to hold the result of an async operation
+
+Electron
+    Framework for building desktop applications
+
+    Every electron application is made of the following 2 processes
+        main process
+        1 or more renderer processes
+
+    Node.js
+        JavaScript Runtime
+        Scheduling Pattern - Single Threaded Event Loop
+        All I/O operations are performed in an async manner
+
+    Chromium
+        UI created using HTML + CSS + JS
+
+Electon APIs
+    app
+        represents the electron application
+        used in handling the life cycle events of the application
+
+    BrowserWindow
+        to create a renderer process
+
+    Dialog
+        System Dialog
+            ex, messages, file open, file save as
+
+    IPC
+        Inter Process Communication
+        ipcMain & ipcRenderer are used for communication between the main process and the renderer process
+
+    
+Node
+    npm
+    package.json (metadata information about the application)
+        - name
+        - version
+        - description
+        - keywords
+        - repository
+        - private
+        - author
+        - license
+        - dependencies
+            documents all the other node modules that the application depends on at runtime
+        - devDependencies
+            documents all the other node modules that the application depends on to perform development activities
+        - scripts
+            commands for performing development activities in the application
+    npm init
+
+

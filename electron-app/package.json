@@ -1,0 +1,20 @@
+{
+  "name": "electron-app",
+  "version": "0.1.0",
+  "description": "A sample application for demonstrating electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "demo",
+    "electron",
+    "node"
+  ],
+  "author": "Magesh K",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.1.0"
+  }
+}
