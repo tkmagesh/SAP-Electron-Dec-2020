@@ -85,4 +85,5 @@ dynamic
 
 loosely typed
 
-
+Prototypal Inheritance
+    One object (prototype) acts as a base object for a family of objects
