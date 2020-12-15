@@ -1,4 +1,4 @@
-const { BrowserWindow, app, ipcMain, dialog } = require('electron');
+const { BrowserWindow, app, ipcMain, dialog, Menu } = require('electron');
 
 let mainWindow;
 
@@ -51,15 +51,69 @@ ipcMain.on('evt:getFileName', function(evt, data){
     const fileNames = dialog.showOpenDialogSync();
     evt.sender.send('evt:getFileNameResponse', fileNames[0]);
 })
-
+let timerId;
 app.on('ready', function(){
     createWindow();
+
+
     mainWindow.on('ready-to-show', function(){
-        setInterval(function(){ 
+        timerId = setInterval(function(){ 
             mainWindow.webContents.send('evt:time', new Date().toTimeString());
         }, 1000);
     });
+
+    mainWindow.on('close', () => {
+        if (timerId) clearInterval(timerId);
+    });
+
+    //Menu
+    const template = [
+        {
+            label : 'Demo',
+            submenu : [
+                {
+                    label : 'Greet',
+                    submenu : [
+                        {
+                            label : 'Personal',
+                            click: function () {
+                                console.log('Hi there!')
+                            }
+                        },
+                        {
+                            label : 'Official'
+                        }
+                    ]
+                },
+                {
+                    type : 'separator'
+                },
+                {
+                    label : 'Busy',
+                    type : 'radio',
+                    checked : true
+                }
+            ]
+        },
+        {
+            label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' }
+            ]
+        }
+    ];
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+
 })
+
+
 
 app.on('window-all-closed', function(){
     if (process.platform === 'darwin' /*mac*/){
