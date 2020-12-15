@@ -94,7 +94,7 @@
             };
 
             onNewBugCreated = (newBug) => {
-                id (newBug.id === 0){
+                if (newBug.id === 0){
                     newBug.id = this.state.bugs.reduce((result, bug) => result > bug.id ? result : bug.id, 0) + 1
                 };
                 this.setState({ bugs : [...this.state.bugs, newBug ]});
