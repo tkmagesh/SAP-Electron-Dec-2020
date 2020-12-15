@@ -36,6 +36,12 @@ ipcMain.on('evt:greet', function(evt, data){
     evt.returnValue = 'Hi there! [sync]';
 });
 
+//using promises
+ipcMain.handle('evt:greet', async function(evt, data){
+    console.log(data);
+    return 'Hi there! [promise]';
+});
+
 ipcMain.on('evt:error', function(evt, data){
     const { title, message } = data;
     dialog.showErrorBox(title, message);
