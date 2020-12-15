@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Demo</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script>
+        window.addEventListener('load', onDocumentLoad);
+        function onDocumentLoad(){
+            document
+                .getElementById('btnRender')
+                .addEventListener('click', onBtnRenderClick)
+        };
+        var counter = 0;
+        function onBtnRenderClick(){
+            ++counter;
+            
+            //Using the browser dom
+            //document.getElementById('spanCounter').innerText = counter;
+            
+            //Using the virutal dom
+            /* var h1Ele = React.createElement('h1', { id: 'header-1' }, 'Welcome to React! - ' + counter);
+            ReactDOM.render(h1Ele, document.getElementById('root')) */
+
+            var appEle = React.createElement('div', null, 
+                React.createElement('h1', null, 'React.js!'),
+                React.createElement('div', null, 
+                    React.createElement('span', null, 'Counter : '),
+                    React.createElement('span', null, counter)
+                ),
+                React.createElement('hr'),
+                React.createElement('section', null,
+                    React.createElement('h3', null, 'Introduction'),
+                    React.createElement('p', null, 'Tempor enim elit veniam deserunt aute quis aute ullamco sit. Consectetur incididunt commodo exercitation quis est eiusmod incididunt magna sit aliqua. Velit mollit id aute aliqua irure. Excepteur tempor magna nostrud qui et irure nostrud magna duis consequat quis. Nisi tempor qui aute quis duis proident ullamco velit.'),
+                    React.createElement('p', null, 'Laboris quis Lorem do esse adipisicing. Mollit et adipisicing reprehenderit do ullamco. Eiusmod in fugiat eu velit dolore id ipsum consectetur exercitation duis eiusmod adipisicing sunt do.'),
+                    React.createElement('p', null, 'Incididunt aliqua nisi pariatur sint amet cillum veniam tempor minim. Aliquip Lorem magna do nulla adipisicing laborum amet cupidatat sint. Cupidatat culpa laborum eu culpa non aute reprehenderit ex. Nostrud dolor minim occaecat sunt nisi eiusmod incididunt ut irure magna laboris. Veniam proident cillum ut proident elit et quis proident excepteur ut est. Sit officia officia consectetur aliqua Lorem enim ea.'),
+                ),
+                React.createElement('section', null,
+                    React.createElement('h3', null, 'Advantages'),
+                    React.createElement('ol', null, 
+                        React.createElement('li', null, 'Efficient'),
+                        React.createElement('li', null, 'Declarative'),
+                    )
+                )
+            );
+
+            ReactDOM.render(appEle, document.getElementById('root'));
+
+        }
+
+    </script>
+</head>
+<body>
+    <input type="button" value="Render" id="btnRender">
+    <div id="root"></div>
+</body>
+</html>
