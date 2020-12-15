@@ -16,6 +16,11 @@
             btnSendMessage.addEventListener('click', onBtnSendMessageClick);
 
             ipcRenderer.on('evt:greetResponse', onGreetResponse);
+            ipcRenderer.on('evt:time', onTimeEvent);
+        }
+
+        function onTimeEvent(evt, data){
+            document.getElementById('divTime').innerText = data;
         }
 
         function onGreetResponse(evt, data){
@@ -30,6 +35,7 @@
 <body>
     <h1>Electron</h1>
     <hr>
+    <div id="divTime"></div>
     <p>Welcome to Electron!</p>
     <input type="button" value="Send Message" id="btnSendMessage">
     <div id="divResponse"></div>

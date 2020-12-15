@@ -1,7 +1,9 @@
 const { BrowserWindow, app, ipcMain } = require('electron');
 
+let mainWindow;
+
 function createWindow(){
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         maxHeight : 600,
@@ -18,6 +20,8 @@ function createWindow(){
     mainWindow.webContents.openDevTools();
 }
 
+
+
 ipcMain.on('evt:greet', function(evt, data){
     console.log(data);
     evt.sender.send('evt:greetResponse', 'Hi there!');
@@ -25,6 +29,11 @@ ipcMain.on('evt:greet', function(evt, data){
 
 app.on('ready', function(){
     createWindow();
+    mainWindow.on('ready-to-show', function(){
+        setInterval(function(){ 
+            mainWindow.webContents.send('evt:time', new Date().toTimeString());
+        }, 1000);
+    });
 })
 
 app.on('window-all-closed', function(){
