@@ -1,4 +1,4 @@
-const { BrowserWindow, app, ipcMain, dialog, Menu, MenuItem } = require('electron');
+const { BrowserWindow, app, ipcMain, dialog, Menu, MenuItem, Tray } = require('electron');
 
 let mainWindow;
 
@@ -53,11 +53,25 @@ ipcMain.on('evt:getFileName', function(evt, data){
 })
 let timerId;
 
+let tray;
 
 app.on('ready', function(){
 
     createWindow();
 
+    //create a system tray icon with menu
+    tray = new Tray('images/ethernet.png');
+    const ctxMenu = new Menu();
+    ctxMenu.append(new MenuItem({
+        label : 'Hello',
+        click : function(){
+            console.log('Context menu activated');
+        }
+    }))
+    ctxMenu.append(new MenuItem({ role : 'selectall'}))
+    tray.setContextMenu(ctxMenu);
+
+    /* ************ */    
     mainWindow.on('ready-to-show', function(){
         timerId = setInterval(function(){ 
             mainWindow.webContents.send('evt:time', new Date().toTimeString());
