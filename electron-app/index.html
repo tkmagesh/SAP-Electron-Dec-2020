@@ -6,9 +6,11 @@
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <title>Electron App</title>
     <script>
-        const { ipcRenderer } = require('electron');
+        const { ipcRenderer, remote } = require('electron');
         const fs = require('fs');
+        const { BrowserWindow } = remote;
         //import { ipcRenderer } from 'electron';
+        
         
 
         console.log('HTML page is loaded');
@@ -24,9 +26,31 @@
             document
                 .getElementById('btnDisplayFile')
                 .addEventListener('click', onBtnDisplayFileClick);
+
+            document
+                .getElementById('btnShowWindow')
+                .addEventListener('click', onBtnShowWindowClick);
+
             ipcRenderer.on('evt:greetResponse', onGreetResponse);
             ipcRenderer.on('evt:time', onTimeEvent);
             ipcRenderer.on('evt:getFileNameResponse', onGetFileNameResponse);
+        }
+
+        function onBtnShowWindowClick(){
+            const window2 = new BrowserWindow({
+                width: 400,
+                height: 400,
+                backgroundColor: '#fff',
+                title: 'Child Window',
+                //frame : false,
+                modal : true,
+                parent : remote.getCurrentWindow(),
+                webPreferences: {
+                    nodeIntegration: true,
+                    enableRemoteModule: true
+                }
+            });
+            window2.loadFile('index-2.html');
         }
 
         function onBtnDisplayFileClick(){
@@ -70,5 +94,6 @@
     <input type="button" value="Send Error" id="btnSendError">
     <input type="button" value="Display File" id="btnDisplayFile">
     <div id="divFileContents"></div>
+    <input type="button" id="btnShowWindow" value="Show Window">
 </body>
 </html>
