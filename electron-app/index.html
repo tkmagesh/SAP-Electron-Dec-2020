@@ -28,7 +28,12 @@
         }
 
         function onBtnSendMessageClick(){
-            ipcRenderer.send('evt:greet', 'Hello there!');
+            //async 
+            //ipcRenderer.send('evt:greet', 'Hello there!');
+
+            //sync
+            const evtResponse = ipcRenderer.sendSync('evt:greet', 'Hello there!');
+            document.getElementById('divResponse').innerText = evtResponse;
         }
     </script>
 </head>

@@ -22,10 +22,20 @@ function createWindow(){
 
 
 
+//async 
+/* 
 ipcMain.on('evt:greet', function(evt, data){
     console.log(data);
     evt.sender.send('evt:greetResponse', 'Hi there!');
+}); 
+*/
+
+//sync
+ipcMain.on('evt:greet', function(evt, data){
+    console.log(data);
+    evt.returnValue = 'Hi there! [sync]';
 });
+
 
 app.on('ready', function(){
     createWindow();
