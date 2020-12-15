@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Tracker</title>
+    <style>
+        body {
+            margin: 50px;
+        }
+    
+        section {
+            margin-bottom: 10px;
+        }
+    
+        .stats,
+        .bugname {
+            font-size: 18pt;
+        }
+    
+        .closed {
+            color: red;
+            text-decoration: line-through;
+            font-style: italic;
+            font-weight: bold;
+        }
+    
+        .bugname {
+            cursor: pointer;
+        }
+    
+        ol {
+            width: 500px;
+            list-style: none;
+            -webkit-padding-start: 0px;
+        }
+    
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid gray;
+            background-color: #e7e7e7;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <script type="text/babel">
+
+        class BugStats extends React.Component{
+            render(){
+                const { bugs } = this.props,
+                    closedCount = bugs.reduce((result, bug) => bug.isClosed ? result + 1 : result, 0);
+                return(
+                    <section className="stats">
+                        <span className="closed">{closedCount}</span>
+                        <span> / </span>
+                        <span>{bugs.length}</span>
+                    </section>
+                )
+            }
+        }
+
+        class BugEdit extends React.Component{
+            state = {
+                newBugName: ''
+            };
+
+            onAddNewClick = () => {
+                const { newBugName } = this.state,
+                    newBug = {
+                        id: 0,
+                        name: newBugName,
+                        isClosed: false
+                    };
+                this.props.onNewBug(newBug);
+            }
+            render(){
+                return(
+                    <section className="edit">
+                        <label htmlFor="">Bug Name :</label>
+                        <input type="text" onChange={evt => this.setState({ newBugName: evt.target.value })} />
+                        <input type="button" value="Add New" onClick={this.onAddNewClick} />
+                    </section>
+                )
+            }
+        }
+        
+        class BugTracker extends React.Component{
+            state = {
+                newBugName : '',
+                bugs : []
+            };
+
+            onNewBugCreated = (newBug) => {
+                id (newBug.id === 0){
+                    newBug.id = this.state.bugs.reduce((result, bug) => result > bug.id ? result : bug.id, 0) + 1
+                };
+                this.setState({ bugs : [...this.state.bugs, newBug ]});
+            }
+
+            onBugNameClick = (bugToToggle) => {
+                const toggledBug = { ...bugToToggle, isClosed : !bugToToggle.isClosed },
+                    { bugs } = this.state,
+                    updatedBugs = bugs.map(bug => bug.id === bugToToggle.id ? toggledBug : bug);
+                this.setState({ bugs : updatedBugs });
+            }
+
+            onRemoveClick = (bugToRemove) => {
+                const { bugs } = this.state,
+                    updatedBugs = bugs.filter(bug => bug.id !== bugToRemove.id);
+                this.setState({bugs : updatedBugs});
+            }
+
+            onRemoveClosedClick = () => {
+                const { bugs } = this.state,
+                    updatedBugs = bugs.filter(bug => !bug.isClosed);
+                this.setState({bugs : updatedBugs});
+            }
+
+            render(){
+                const { bugs } = this.state,
+                    bugItems = bugs.map(bug => (
+                        <li key={bug.id}> 
+                            <div className={'bugname ' + (bug.isClosed ? 'closed' : '')} onClick={() => this.onBugNameClick(bug)}>
+                                {bug.name}
+                            </div>
+                            <input type="button" value="Remove" onClick={() => this.onRemoveClick(bug)} />
+                        </li>
+                    )),
+                    
+                return(
+                    <div>
+                        <h1>Bug Tracker</h1>
+                        <hr />
+                        <BugStats bugs={bugs} />
+                        <BugEdit onNewBug={this.onNewBugCreated} />
+                        <section className="list">
+                            <ol>
+                                {bugItems}
+                            </ol>
+                            <input type="button" value="Remove Closed" onClick={this.onRemoveClosedClick} />
+                        </section>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <BugTracker/>, 
+            document.getElementById('root')
+        );
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
