@@ -1,4 +1,4 @@
-const { BrowserWindow, app, ipcMain, dialog, Menu } = require('electron');
+const { BrowserWindow, app, ipcMain, dialog, Menu, MenuItem } = require('electron');
 
 let mainWindow;
 
@@ -52,9 +52,11 @@ ipcMain.on('evt:getFileName', function(evt, data){
     evt.sender.send('evt:getFileNameResponse', fileNames[0]);
 })
 let timerId;
-app.on('ready', function(){
-    createWindow();
 
+
+app.on('ready', function(){
+
+    createWindow();
 
     mainWindow.on('ready-to-show', function(){
         timerId = setInterval(function(){ 
@@ -126,4 +128,19 @@ app.on('activate', function(){
         createWindow();
     }
 });
+
+//displaying context menu
+app.on('browser-window-created', (evt, win) => {
+    const ctxMenu = new Menu();
+    ctxMenu.append(new MenuItem({
+        label : 'Hello',
+        click : function(){
+            console.log('Context menu activated');
+        }
+    }))
+    ctxMenu.append(new MenuItem({ role : 'selectall'}))
+    win.webContents.on('context-menu', (evt, params) => {
+        ctxMenu.popup(win, params.x, params.y);
+    });
+})
 

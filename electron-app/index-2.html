@@ -6,6 +6,53 @@
     <title>Document</title>
     <script>
         const { remote } = require('electron');
+        const { Menu } = remote;
+
+        remote.getCurrentWindow().on('ready-to-show', () => {
+            const template = [
+                {
+                    label: 'Demo',
+                    submenu: [
+                        {
+                            label: 'Renderer - Greet',
+                            submenu: [
+                                {
+                                    label: 'Personal',
+                                    click: function () {
+                                        console.log('Hi there!')
+                                    }
+                                },
+                                {
+                                    label: 'Official'
+                                }
+                            ]
+                        },
+                        {
+                            type: 'separator'
+                        },
+                        {
+                            label: 'Busy',
+                            type: 'radio',
+                            checked: true
+                        }
+                    ]
+                },
+                {
+                    label: 'Edit',
+                    submenu: [
+                        { role: 'undo' },
+                        { role: 'redo' },
+                        { type: 'separator' },
+                        { role: 'cut' },
+                        { role: 'copy' },
+                        { role: 'paste' }
+                    ]
+                }
+            ];
+
+            const menu = Menu.buildFromTemplate(template);
+            Menu.setApplicationMenu(menu);
+        })
         
         window.addEventListener('load', function(){
             document
