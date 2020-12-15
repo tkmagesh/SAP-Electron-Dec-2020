@@ -4,10 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electron App</title>
+    <script>
+        const { ipcRenderer } = require('electron');
+        //import { ipcRenderer } from 'electron';
+        
+
+        console.log('HTML page is loaded');
+        window.addEventListener('load', onDocumentLoad);
+        function onDocumentLoad(){
+            const btnSendMessage = document.getElementById('btnSendMessage');
+            btnSendMessage.addEventListener('click', onBtnSendMessageClick);
+
+            ipcRenderer.on('evt:greetResponse', onGreetResponse);
+        }
+
+        function onGreetResponse(evt, data){
+            document.getElementById('divResponse').innerText = data;
+        }
+
+        function onBtnSendMessageClick(){
+            ipcRenderer.send('evt:greet', 'Hello there!');
+        }
+    </script>
 </head>
 <body>
     <h1>Electron</h1>
     <hr>
     <p>Welcome to Electron!</p>
+    <input type="button" value="Send Message" id="btnSendMessage">
+    <div id="divResponse"></div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const { BrowserWindow, app } = require('electron');
+const { BrowserWindow, app, ipcMain } = require('electron');
 
 function createWindow(){
     const mainWindow = new BrowserWindow({
@@ -18,6 +18,11 @@ function createWindow(){
     mainWindow.webContents.openDevTools();
 }
 
+ipcMain.on('evt:greet', function(evt, data){
+    console.log(data);
+    evt.sender.send('evt:greetResponse', 'Hi there!');
+});
+
 app.on('ready', function(){
     createWindow();
 })
@@ -33,3 +38,4 @@ app.on('activate', function(){
         createWindow();
     }
 });
+
