@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <title>Electron App</title>
     <script>
         const { ipcRenderer } = require('electron');
+        const fs = require('fs');
         //import { ipcRenderer } from 'electron';
         
 
@@ -18,8 +20,22 @@
             document
                 .getElementById('btnSendError')
                 .addEventListener('click', onBtnSendErrorClick);
+
+            document
+                .getElementById('btnDisplayFile')
+                .addEventListener('click', onBtnDisplayFileClick);
             ipcRenderer.on('evt:greetResponse', onGreetResponse);
             ipcRenderer.on('evt:time', onTimeEvent);
+            ipcRenderer.on('evt:getFileNameResponse', onGetFileNameResponse);
+        }
+
+        function onBtnDisplayFileClick(){
+            ipcRenderer.send('evt:getFileName');
+        }
+
+        function onGetFileNameResponse(evt, fileName){
+            const fileContents = fs.readFileSync(fileName, { encoding : 'utf8'});
+            document.getElementById('divFileContents').innerText = fileContents;
         }
 
         function onBtnSendErrorClick(){
@@ -52,5 +68,7 @@
     <input type="button" value="Send Message" id="btnSendMessage">
     <div id="divResponse"></div>
     <input type="button" value="Send Error" id="btnSendError">
+    <input type="button" value="Display File" id="btnDisplayFile">
+    <div id="divFileContents"></div>
 </body>
 </html>

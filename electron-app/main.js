@@ -39,6 +39,11 @@ ipcMain.on('evt:greet', function(evt, data){
 ipcMain.on('evt:error', function(evt, data){
     const { title, message } = data;
     dialog.showErrorBox(title, message);
+});
+
+ipcMain.on('evt:getFileName', function(evt, data){
+    const fileNames = dialog.showOpenDialogSync();
+    evt.sender.send('evt:getFileNameResponse', fileNames[0]);
 })
 
 app.on('ready', function(){
