@@ -73,8 +73,9 @@ app.on('ready', function(){
 
     /* ************ */    
     mainWindow.on('ready-to-show', function(){
-        timerId = setInterval(function(){ 
-            mainWindow.webContents.send('evt:time', new Date().toTimeString());
+        timerId = setInterval(function(){
+            if (mainWindow) 
+                mainWindow.webContents.send('evt:time', new Date().toTimeString());
         }, 1000);
     });
 
