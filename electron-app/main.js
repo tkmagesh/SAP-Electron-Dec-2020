@@ -1,4 +1,4 @@
-const { BrowserWindow, app, ipcMain } = require('electron');
+const { BrowserWindow, app, ipcMain, dialog } = require('electron');
 
 let mainWindow;
 
@@ -36,6 +36,10 @@ ipcMain.on('evt:greet', function(evt, data){
     evt.returnValue = 'Hi there! [sync]';
 });
 
+ipcMain.on('evt:error', function(evt, data){
+    const { title, message } = data;
+    dialog.showErrorBox(title, message);
+})
 
 app.on('ready', function(){
     createWindow();

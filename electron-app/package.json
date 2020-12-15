@@ -4,7 +4,7 @@
   "description": "A sample application for demonstrating electron",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon --exec 'electron .'",
+    "start": "nodemon --exec electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

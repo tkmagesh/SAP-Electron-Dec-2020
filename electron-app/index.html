@@ -15,8 +15,15 @@
             const btnSendMessage = document.getElementById('btnSendMessage');
             btnSendMessage.addEventListener('click', onBtnSendMessageClick);
 
+            document
+                .getElementById('btnSendError')
+                .addEventListener('click', onBtnSendErrorClick);
             ipcRenderer.on('evt:greetResponse', onGreetResponse);
             ipcRenderer.on('evt:time', onTimeEvent);
+        }
+
+        function onBtnSendErrorClick(){
+            ipcRenderer.send('evt:error', {title : 'App Error!', message : 'Something went wrong!'});
         }
 
         function onTimeEvent(evt, data){
@@ -44,5 +51,6 @@
     <p>Welcome to Electron!</p>
     <input type="button" value="Send Message" id="btnSendMessage">
     <div id="divResponse"></div>
+    <input type="button" value="Send Error" id="btnSendError">
 </body>
 </html>
